@@ -9,7 +9,29 @@
 
 #include <string>
 #include <vector>
+#include <deque>
 #include "image.h"
+
+struct Vertex
+{
+   int x;
+   int y;
+};
+
+struct Line
+{
+   struct Vertex v1;
+   struct Vertex v2;
+   agl::Pixel color;
+};
+
+struct Triangle
+{
+   struct Vertex v1;
+   struct Vertex v2;
+   struct Vertex v3;
+   agl::Pixel color;
+};
 
 namespace agl
 {
@@ -46,8 +68,23 @@ namespace agl
       // Fill the canvas with the given background color
       void background(unsigned char r, unsigned char g, unsigned char b);
 
+      void drawLine(Line line);
+
+      void drawLineHigh(Line line);
+
+      void drawLineLow(Line line);
+
+      void drawTriangle(Triangle triangle);
+
+      struct Line popLine();
+
+      struct Triangle popTriangle();
    private:
       Image _canvas;
+      std::deque<Vertex> _vertices;
+      std::deque<Pixel> _colors;
+      std::deque<int> _colorsTTL;
+      PrimitiveType _type;
    };
 }
 

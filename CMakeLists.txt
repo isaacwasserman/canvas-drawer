@@ -24,6 +24,8 @@ elseif (APPLE)
 
   set(CMAKE_MACOSX_RPATH 1)
   set(CMAKE_CXX_FLAGS "-Wall -Wno-deprecated-declarations -Wno-reorder-ctor -Wno-unused-function -Wno-unused-variable -g -stdlib=libc++ -std=c++14")
+  add_compile_options(-fsanitize=address)
+  add_link_options(-fsanitize=address)
   find_library(GL_LIB OpenGL)
   find_library(GLFW glfw)
   add_definitions(-DAPPLE)
@@ -36,6 +38,8 @@ elseif (UNIX)
 
   set(OpenGL_GL_PREFERENCE  "GLVND")
   set(CMAKE_CXX_FLAGS "-Wall -g -std=c++14 -Wno-comment -Wno-sign-compare -Wno-reorder -Wno-unused-function")
+  add_compile_options(-fsanitize=address)
+  add_link_options(-fsanitize=address)
   FIND_PACKAGE(OpenGL REQUIRED) 
   FIND_PACKAGE(GLEW REQUIRED)
 
