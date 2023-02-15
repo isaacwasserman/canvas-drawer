@@ -18,10 +18,10 @@ void Canvas::begin(PrimitiveType type) {
 void Canvas::end() {
    if(_type == LINES){
       struct Line line;
-      // while(_vertices.size() > 1){
-      //    line = popLine();
-      //    drawLine(line);
-      // }
+      while(_vertices.size() > 1){
+         line = popLine();
+         drawLine(line);
+      }
    }
    // else if(_type == TRIANGLES){
    //    struct Triangle triangle;
@@ -30,13 +30,11 @@ void Canvas::end() {
    //       drawTriangle(triangle);
    //    }
    // }
-   // _vertices.clear();
-   // _colors.clear();
-   // _colorsTTL.clear();
+   _vertices.clear();
 }
 
 struct Line Canvas::popLine(){
-   struct Line line{Vertex{0,0}, Vertex{0,0}, Pixel{255,255,255}};
+   struct Line line;
 
    struct Vertex v1 = _vertices[0];
    struct Vertex v2 = _vertices[1];
@@ -47,13 +45,7 @@ struct Line Canvas::popLine(){
    line.v1 = v1;
    line.v2 = v2;
 
-   line.color = _colors[0];
-
-   _colorsTTL[0] -= 2;
-   if(_colorsTTL[0] <= 0){
-      _colors.pop_front();
-      _colorsTTL.pop_front();
-   }
+   line.color = v1.color;
 
    return line;
 }
@@ -125,15 +117,12 @@ void Canvas::drawTriangle(Triangle triangle){
 }
 
 void Canvas::vertex(int x, int y) {
-   struct Vertex v = {x, y};
+   struct Vertex v = {x, y, currentColor};
    _vertices.push_back(v);
-   _colorsTTL[_colorsTTL.size() - 1]++;
 }
 
 void Canvas::color(unsigned char r, unsigned char g, unsigned char b) {
-   Pixel color = Pixel{r, g, b};
-   _colors.push_back(color);
-   _colorsTTL.push_back(0);
+   currentColor = Pixel{r, g, b};
 }
 
 void Canvas::background(unsigned char r, unsigned char g, unsigned char b) {}

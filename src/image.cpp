@@ -128,6 +128,7 @@ Image::Image(int width, int height) {
     delete[] mData;
   }
   mData = new unsigned char[width * height * mChannels];
+  memset(mData, (unsigned char) 0, width * height * mChannels);
 }
 
 /**

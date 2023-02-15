@@ -16,6 +16,7 @@ struct Vertex
 {
    int x;
    int y;
+   agl::Pixel color;
 };
 
 struct Line
@@ -82,8 +83,7 @@ namespace agl
    private:
       Image _canvas;
       std::deque<Vertex> _vertices;
-      std::deque<Pixel> _colors;
-      std::deque<int> _colorsTTL;
+      agl::Pixel currentColor;
       PrimitiveType _type;
    };
 }
