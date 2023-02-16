@@ -33,9 +33,22 @@ struct Triangle
    agl::Pixel color;
 };
 
+struct Quad
+{
+   struct Triangle t1;
+   struct Triangle t2;
+};
+
+struct Fan
+{
+   struct Vertex center;
+   int nOuterVerts;
+   struct Vertex *outerVerts;
+};
+
 namespace agl
 {
-   enum PrimitiveType {UNDEFINED, LINES, TRIANGLES};
+   enum PrimitiveType {UNDEFINED, LINES, TRIANGLES, QUADS, FANS};
    class Canvas
    {
    public:
@@ -79,6 +92,14 @@ namespace agl
       struct Line popLine();
 
       struct Triangle popTriangle();
+
+      struct Quad popQuad();
+
+      void drawQuad(Quad quad);
+
+      struct Fan popFan(struct Vertex *outerVertsPointer);
+
+      void drawFan(Fan fan);
    private:
       Image _canvas;
       std::deque<Vertex> _vertices;

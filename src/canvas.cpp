@@ -1,6 +1,7 @@
 #include "canvas.h"
 
 #include <cassert>
+#include <math.h>
 
 using namespace std;
 using namespace agl;
@@ -29,6 +30,19 @@ void Canvas::end() {
          triangle = popTriangle();
          drawTriangle(triangle);
       }
+   }
+   else if(_type == QUADS){
+      struct Quad quad;
+      while(_vertices.size() > 3){
+         quad = popQuad();
+         drawQuad(quad);
+      }
+   }
+   else if(_type == FANS){
+      struct Fan fan;
+      struct Vertex outerVertsPointer[_vertices.size() - 1];
+      fan = popFan(outerVertsPointer);
+      drawFan(fan);
    }
    _vertices.clear();
 }
@@ -64,6 +78,53 @@ struct Triangle Canvas::popTriangle(){
    triangle.v3 = v3;
 
    return triangle;
+}
+
+struct Quad Canvas::popQuad(){
+   struct Triangle t1;
+   struct Triangle t2;
+   struct Quad quad;
+
+   struct Vertex v1 = _vertices[0];
+   struct Vertex v2 = _vertices[1];
+   struct Vertex v3 = _vertices[2];
+   struct Vertex v4 = _vertices[3];
+
+   _vertices.pop_front();
+   _vertices.pop_front();
+   _vertices.pop_front();
+   _vertices.pop_front();
+
+   t1.v1 = v1;
+   t1.v2 = v2;
+   t1.v3 = v3;
+
+   t2.v1 = v3;
+   t2.v2 = v1;
+   t2.v3 = v4;
+
+   quad.t1 = t1;
+   quad.t2 = t2;
+
+   return quad;
+}
+
+struct Fan Canvas::popFan(struct Vertex *outerVertsPointer){
+   struct Fan fan;
+
+   struct Vertex center = _vertices[0];
+   _vertices.pop_front();
+   fan.center = center;
+
+   int nOuterVerts = _vertices.size();
+   fan.nOuterVerts = nOuterVerts;
+   fan.outerVerts = outerVertsPointer;
+
+   for(int i = 0; i < nOuterVerts; i++){
+      fan.outerVerts[i] = _vertices[i];
+   }
+
+   return fan;
 }
 
 void Canvas::drawLine(Line line){
@@ -164,6 +225,17 @@ void Canvas::drawTriangle(Triangle triangle){
    drawLine(Line{triangle.v1, triangle.v2});
    drawLine(Line{triangle.v2, triangle.v3});
    drawLine(Line{triangle.v3, triangle.v1});
+}
+
+void Canvas::drawQuad(Quad quad){
+   drawTriangle(quad.t1);
+   drawTriangle(quad.t2);
+}
+
+void Canvas::drawFan(Fan fan){
+   for(int i = 0; i < fan.nOuterVerts; i++){
+      drawTriangle(Triangle{fan.center, fan.outerVerts[i], fan.outerVerts[i + 1]});
+   }
 }
 
 void Canvas::vertex(int x, int y) {
