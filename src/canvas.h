@@ -23,7 +23,6 @@ struct Line
 {
    struct Vertex v1;
    struct Vertex v2;
-   agl::Pixel color;
 };
 
 struct Triangle
