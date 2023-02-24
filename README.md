@@ -45,7 +45,14 @@ canvas-drawer/build $ ../bin/draw_art
 
 ## Supported primitives
 
-TODO: Document the custom primitives supported by your canvas class
+- `LINES`
+    - Interpolation between two vertices with individual stroke color/alpha/width attributes 
+- `TRIANGLES`
+    - Joins three vertices into three lines with per-vertex fill color and alpha
+- `QUADS`
+    - Joins four vertices into two triangles
+- `FANS`
+    - Joins $n$ vertices into a polygon made of $n-1$ triangles. First vertex specifies the central vertex where all triangles meet.
 
 ## Added Functionality
 - Quads
