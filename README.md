@@ -2,7 +2,7 @@
 
 Implements a simple drawing api
 
-![Featured Image](build/tesselate.png)
+![Featured Image](tesselate.png)
 
 ## How to build
 
@@ -55,6 +55,6 @@ TODO: Document the custom primitives supported by your canvas class
 
 ## Results
 
-![Featured Image](build/tesselate.png)
+![Featured Image](tesselate.png)
 
 Background color gradient uses a triangle fan to specify colors at specific points and is blended over the triangles using alpha blending. Rectangles are implemented with a `QUAD` primitive and use the subtract blend mode. The central sphere is a triangle fan with per-vertex shading.
