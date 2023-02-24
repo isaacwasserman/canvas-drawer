@@ -29,6 +29,7 @@ class Pixel {
   Pixel operator*(const float& operand) const;
   Pixel operator/(const float& operand);
   Pixel operator+(const Pixel& other);
+  Pixel operator-(const Pixel& other);
   int *toArray();
 
   unsigned char r;

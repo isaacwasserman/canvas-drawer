@@ -2,7 +2,7 @@
 
 Implements a simple drawing api
 
-TODO: Add a representative image for your project here
+![Featured Image](build/tesselate.png)
 
 ## How to build
 
@@ -47,6 +47,14 @@ canvas-drawer/build $ ../bin/draw_art
 
 TODO: Document the custom primitives supported by your canvas class
 
+## Added Functionality
+- Quads
+- Triangle Fans
+- Add and subtract blend modes
+- Alpha blending
+
 ## Results
 
-TODO: Show artworks using your class
+![Featured Image](build/tesselate.png)
+
+Background color gradient uses a triangle fan to specify colors at specific points and is blended over the triangles using alpha blending. Rectangles are implemented with a `QUAD` primitive and use the subtract blend mode. The central sphere is a triangle fan with per-vertex shading.

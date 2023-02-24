@@ -100,6 +100,15 @@ Pixel Pixel::operator+(const Pixel& other){
 }
 
 /**
+ * @brief Subtract two Pixel objects
+ * @param other The Pixel object to subtract
+ * @return A new Pixel object with the values of the two subtracted (r1 - r2, g1 - g2, b1 - b2)
+ */
+Pixel Pixel::operator-(const Pixel& other){
+  return Pixel(std::max(0, this->r - other.r), std::max(0, this->g - other.g), std::max(0, this->b - other.b));
+}
+
+/**
  * @brief Stream a Pixel object to an output stream
  * @param stream The output stream to write to
  * @param p The Pixel object to write
